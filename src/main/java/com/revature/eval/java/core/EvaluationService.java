@@ -702,8 +702,27 @@ public class EvaluationService {
      * @return
      */
     public boolean isLuhnValid(String string) {
-        // TODO Write an implementation for this method declaration
-        return false;
+        if (string.matches("[^0-9 ]")) {
+            return false;
+        }
+        String pureStr = string.replaceAll(" ", "");
+        if (pureStr.length() < 1) {
+            return false;
+        }
+
+        int sum = 0;
+        for (int i = pureStr.length() - 2; i >= 0; i -= 2) {
+            int cur = (pureStr.charAt(i) - '0') * 2;
+            if (cur > 9) {
+                cur -= 9;
+            }
+            sum += cur;
+        }
+
+        for (int i = pureStr.length() - 1; i >= 0; i -= 2) {
+            sum += pureStr.charAt(i) - '0';
+        }
+        return sum % 10 == 0;
     }
 
     /**
